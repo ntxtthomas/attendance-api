@@ -1,0 +1,21 @@
+inherit_from: .rubocop_todo.yml
+
+require:
+  - rubocop-rails
+
+AllCops:
+  TargetRubyVersion: 3.4
+  NewCops: enable
+  Exclude:
+    - "bin/**/*"
+    - "db/**/*"
+    - "config/**/*"
+    - "test/test_helper.rb"
+    - "node_modules/**/*"
+    - "vendor/**/*"
+    - "log/**/*"
+    - "tmp/**/*"
+    - "storage/**/*"
+
+Layout/LineLength:
+  Max: 120
