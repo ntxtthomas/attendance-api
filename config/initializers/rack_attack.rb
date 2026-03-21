@@ -1,7 +1,22 @@
 class Rack::Attack
-  # Use Redis in production for distributed counters (optional)
-  if ENV['REDIS_URL']
-    Rack::Attack.cache.store = ActiveSupport::Cache::RedisCacheStore.new(url: ENV['REDIS_URL'])
+  # Use Redis in production for distributed counters (optional).
+  # Initialize Redis-backed cache only when available and compatible; fall back to memory store.
+  begin
+    if ENV['REDIS_URL'] && defined?(ActiveSupport::Cache::RedisCacheStore)
+      begin
+        Rack::Attack.cache.store = ActiveSupport::Cache::RedisCacheStore.new(url: ENV['REDIS_URL'])
+      rescue StandardError => e
+        Rails.logger.info "RedisCacheStore unavailable (#{e.class}): #{e.message}; using MemoryStore"
+        Rack::Attack.cache.store = ActiveSupport::Cache::MemoryStore.new
+      end
+    else
+      Rack::Attack.cache.store = ActiveSupport::Cache::MemoryStore.new
+    end
+  rescue StandardError => e
+    # If anything unexpected happens during initializer (e.g. when running generators),
+    # don't break Rails boot — fall back to memory store and log.
+    warn "Rack::Attack initializer error: #{e.class} - #{e.message}"
+    Rack::Attack.cache.store = ActiveSupport::Cache::MemoryStore.new
   end
 
   # Throttle requests by IP: 100 reqs per minute

@@ -1,6 +1,9 @@
 Rails.application.routes.draw do
+  devise_for :users
+
   mount Rswag::Ui::Engine => '/api-docs'
   mount Rswag::Api::Engine => '/api-docs'
+
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
@@ -9,4 +12,11 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "/index"
+    # Mount PgHero in development only. Protect with HTTP Basic using PGHERO_USER/PGHERO_PASSWORD.
+    if Rails.env.development?
+      require 'pghero'
+      mount PgHero::Engine => '/pghero'
+    end
+
 end
+
