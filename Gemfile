@@ -16,9 +16,11 @@ gem "puma", ">= 5.0"
 gem 'pg', '~> 1.6', '>= 1.6.3'
 
 # Use 
-gem 'pghero', '~> 3.7'
+## PgHero removed: monitoring moved out-of-process (standalone app)
+# gem 'pghero', '~> 3.7'
 
-# Use Redis for Action Cable in production [https://guides.rubyonrails.org/action_cable_overview.html#production-considerations]
+# Use Redis for Action Cable in production
+# See: https://guides.rubyonrails.org/action_cable_overview.html#production-considerations
 gem 'redis', '~> 5.4', '>= 5.4.1'
 
 # Use Active Model has_secure_password [https://guides.rubyonrails.org/active_model_basics.html#securepassword]

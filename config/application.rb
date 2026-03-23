@@ -28,5 +28,10 @@ module AttendanceApi
     # Middleware like session, flash, cookies can be added back manually.
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
+    # enable cookies & server-side sessions for web UIs (PgHero, rails console pages)
+    config.middleware.use ActionDispatch::Cookies
+    config.middleware.use ActionDispatch::Session::CookieStore,
+      key: "_attendance_api_session",
+      same_site: :lax
   end
 end

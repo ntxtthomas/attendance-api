@@ -4,7 +4,5 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
-  if defined?(JwtDenylist)
-    devise :jwt_authenticatable, jwt_revocation_strategy: JwtDenylist
-  end
+  devise :jwt_authenticatable, jwt_revocation_strategy: JwtDenylist if defined?(JwtDenylist)
 end

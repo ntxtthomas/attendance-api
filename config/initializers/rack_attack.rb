@@ -30,7 +30,8 @@ class Rack::Attack
   end
 
   # Custom response for throttled requests
-  self.throttled_response = lambda do |env|
+  # Use the new `throttled_responder` API to avoid deprecation warnings.
+  self.throttled_responder = lambda do |env|
     [429, { 'Content-Type' => 'application/json' }, [{ error: 'Rate limit exceeded' }.to_json]]
   end
 end
