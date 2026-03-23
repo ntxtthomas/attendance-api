@@ -71,13 +71,17 @@ jobs:
       - name: Run tests
         env:
           RAILS_ENV: test
-          # use the service hostname 'postgres' (no host port mapping)
-          DATABASE_URL: postgres://attendance_user:${{ secrets.POSTGRES_PASSWORD }}@postgres:5432/attendance_api_test
+          # Set libpq env vars instead of DATABASE_URL to avoid URI parsing issues
+          PGHOST: postgres
+          PGPORT: 5432
+          PGUSER: attendance_user
+          PGPASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+          PGDATABASE: attendance_api_test
         run: |
           bundle install --jobs 4 --retry 3
           # wait for Postgres service to be ready
           for i in {1..30}; do
-            pg_isready -h postgres -U attendance_user && break || sleep 1
+            pg_isready -h "$PGHOST" -p "$PGPORT" -U "$PGUSER" && break || sleep 1
           done
           bin/rails db:prepare
           bundle exec rspec
