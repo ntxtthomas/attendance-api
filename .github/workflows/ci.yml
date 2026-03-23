@@ -60,7 +60,7 @@ jobs:
           --health-retries 5
     steps:
       - name: Install packages
-        run: sudo apt-get update && sudo apt-get install --no-install-recommends -y build-essential git libyaml-dev pkg-config
+        run: sudo apt-get update && sudo apt-get install --no-install-recommends -y build-essential git libyaml-dev pkg-config postgresql-client
 
       - name: Checkout code
         uses: actions/checkout@v4
@@ -78,5 +78,9 @@ jobs:
           DATABASE_URL: postgres://attendance_user:${{ secrets.POSTGRES_PASSWORD }}@postgres:5432/attendance_api_test
         run: |
           bundle install --jobs 4 --retry 3
+          # wait for Postgres service to be ready
+          for i in {1..30}; do
+            pg_isready -h postgres -U attendance_user && break || sleep 1
+          done
           bin/rails db:prepare
           bundle exec rspec
