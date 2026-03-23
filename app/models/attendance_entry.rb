@@ -1,0 +1,14 @@
+class AttendanceEntry < ApplicationRecord
+
+    before_validation :set_recorded_at, on: :create
+
+    STATUSES = { present: "present", absent: "absent", late: "late", excused: "excused" }.freeze
+
+    validates :status, presence: true, inclusion: { in: STATUSES.values }
+    validates :recorded_at, presence: true
+    validates :student_name, presence: true
+
+    def set_recorded_at
+        self.recorded_at ||= Time.current
+    end
+end
