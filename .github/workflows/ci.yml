@@ -79,6 +79,9 @@ jobs:
           PGUSER: attendance_user
           PGPASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
           PGDATABASE: attendance_api_test
+          # Also provide vars expected by config/database.yml
+          POSTGRES_USER: attendance_user
+          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
         run: |
           bundle install --jobs 4 --retry 3
           # wait for Postgres service to be ready
