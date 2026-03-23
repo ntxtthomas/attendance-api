@@ -49,6 +49,8 @@ jobs:
     services:
       postgres:
         image: postgres:15
+        ports:
+          - 5432:5432
         env:
           POSTGRES_USER: attendance_user
           POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
@@ -72,7 +74,7 @@ jobs:
         env:
           RAILS_ENV: test
           # Set libpq env vars instead of DATABASE_URL to avoid URI parsing issues
-          PGHOST: postgres
+          PGHOST: 127.0.0.1
           PGPORT: 5432
           PGUSER: attendance_user
           PGPASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
