@@ -49,8 +49,6 @@ jobs:
     services:
       postgres:
         image: postgres:15
-        ports:
-          - 5432:5432
         env:
           POSTGRES_USER: attendance_user
           POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
@@ -76,7 +74,8 @@ jobs:
       - name: Run tests
         env:
           RAILS_ENV: test
-          DATABASE_URL: postgres://attendance_user:${{ secrets.POSTGRES_PASSWORD }}@127.0.0.1:5432/attendance_api_test
+          # use the service hostname 'postgres' (no host port mapping)
+          DATABASE_URL: postgres://attendance_user:${{ secrets.POSTGRES_PASSWORD }}@postgres:5432/attendance_api_test
         run: |
           bundle install --jobs 4 --retry 3
           bin/rails db:prepare
