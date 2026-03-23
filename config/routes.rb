@@ -23,10 +23,5 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "/index"
-    # Mount PgHero in development only. Protect with HTTP Basic using PGHERO_USER/PGHERO_PASSWORD.
-    if Rails.env.development?
-        # PgHero removed — no local mount. See README or Gemfile comments.
-    end
-
 end
 

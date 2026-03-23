@@ -7,8 +7,8 @@ default: &default
   # Leave `host` unset for development to use the local Unix socket (faster,
   # avoids TCP auth prompts). Set DB_HOST to override if you need TCP.
   # host: <%= ENV.fetch("DB_HOST") { "localhost" } %>
-  username: <%= ENV.fetch("DB_USER") { ENV.fetch("USER") } %>
-  password: <%= ENV.fetch("DB_PASSWORD") { "" } %>
+  username: <%= ENV.fetch("POSTGRES_USER") { ENV.fetch("USER") } %>
+  password: <%= ENV.fetch("POSTGRES_PASSWORD") { "" } %>
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
 
 development:
