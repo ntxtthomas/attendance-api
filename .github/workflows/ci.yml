@@ -53,11 +53,8 @@ jobs:
           POSTGRES_USER: attendance_user
           POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
           POSTGRES_DB: attendance_api_test
-        options: >-
-          --health-cmd pg_isready -U attendance_user
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
+        # no `options` here — avoid passing Docker health flags that can cause
+        # container create to fail on some runners; we wait for readiness in a step.
     steps:
       - name: Install packages
         run: sudo apt-get update && sudo apt-get install --no-install-recommends -y build-essential git libyaml-dev pkg-config postgresql-client
