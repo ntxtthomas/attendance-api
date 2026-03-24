@@ -5,8 +5,15 @@ module Api
      before_action :underscore_params!
      
       def index
-        entries = current_user.attendance_entries.order(recorded_at: :desc).page(params[:page]).per(20)
-        render json: entries, meta: { page: params[:page], total: entries.total_count }, status: :ok
+        entries = current_user.attendance_entries.order(recorded_at: :desc)
+        paginated = entries.page(params[:page]).per(params[:per_page] || 20)
+        render json: paginated, meta: {
+            pagination: {
+              current_page: paginated.current_page,
+              total_pages: paginated.total_pages,
+              total_count: paginated.total_count
+            }
+          }, status: :ok
       end
 
       def create
@@ -45,12 +52,11 @@ module Api
       end
 
       def formatted_errors(record)
-        # choose shape you want; example returns array envelope with camelCase fields
         record.errors.messages.map do |field, msgs|
           { field: field.to_s.camelize(:lower), messages: msgs }
         end
       end
-      
+
     end
   end
 end
