@@ -1,4 +1,9 @@
 Rails.application.routes.draw do
+  namespace :api do
+    namespace :v1 do
+      resources :attendance_entries, only: %i[index create update destroy]
+    end
+  end
   devise_for :users
 
   mount Rswag::Ui::Engine => '/api-docs'
