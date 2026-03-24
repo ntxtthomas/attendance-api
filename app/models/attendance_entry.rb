@@ -1,5 +1,7 @@
 class AttendanceEntry < ApplicationRecord
 
+    belongs_to :user
+
     before_validation :set_recorded_at, on: :create
 
     belongs_to :user, optional: true
