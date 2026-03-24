@@ -33,5 +33,7 @@ module AttendanceApi
     config.middleware.use ActionDispatch::Session::CookieStore,
       key: "_attendance_api_session",
       same_site: :lax
+    # Register Rack::Attack centrally to avoid duplicate insertions from initializers
+    config.middleware.use Rack::Attack
   end
 end

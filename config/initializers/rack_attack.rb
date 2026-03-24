@@ -36,5 +36,4 @@ class Rack::Attack
   end
 end
 
-# Ensure middleware is used
-Rails.application.config.middleware.use Rack::Attack
+# Middleware registration is handled centrally in config/application.rb

@@ -1,6 +1,8 @@
 FactoryBot.define do
   factory :attendance_entry do
+    association :user
     student_name { Faker::Name.name }
-    status { AttendanceEntry::STATUSES.values.sample }
+    status { "present" }
+    recorded_at { nil }
   end
 end

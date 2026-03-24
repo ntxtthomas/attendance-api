@@ -2,6 +2,8 @@ class AttendanceEntry < ApplicationRecord
 
     before_validation :set_recorded_at, on: :create
 
+    belongs_to :user, optional: true
+
     STATUSES = { present: "present", absent: "absent", late: "late", excused: "excused" }.freeze
 
     validates :status, presence: true, inclusion: { in: STATUSES.values }

@@ -2,6 +2,20 @@ require 'rails_helper'
 
 RSpec.describe AttendanceEntry, type: :model do
   context "validations and creation" do
+
+    it { is_expected.to belong_to(:user) }
+    it { is_expected.to validate_presence_of(:student_name) }
+
+    describe "creation via user" do
+    let(:user) { create(:user) }
+
+      it "is created with the correct user" do
+        entry = user.attendance_entries.create!(student_name: "Sam", status: "present")
+        expect(entry.user).to eq(user)
+        expect(entry).to be_persisted
+      end
+    end
+
     it "is valid with student_name and status" do
       entry = create(:attendance_entry)
       expect(entry).to be_valid
