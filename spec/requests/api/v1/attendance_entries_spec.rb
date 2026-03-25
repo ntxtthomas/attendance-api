@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe Api::V1::AttendanceEntriesController, type: :request do
   def auth_headers(user)
-    token, _ = Warden::JWTAuth::UserEncoder.new.call(user, :user, nil)
+    token, = Warden::JWTAuth::UserEncoder.new.call(user, :user, nil)
     { "Authorization" => "Bearer #{token}" }
   end
 
@@ -19,7 +19,7 @@ RSpec.describe Api::V1::AttendanceEntriesController, type: :request do
       get "/api/v1/attendance_entries", headers: auth_headers(user), as: :json
 
       expect(response).to have_http_status(:ok)
-      body = JSON.parse(response.body)
+      body = response.parsed_body
       expect(body).to be_a(Hash)
       expect(body.fetch("entries").length).to eq(2)
     end
@@ -73,7 +73,6 @@ RSpec.describe Api::V1::AttendanceEntriesController, type: :request do
     end
   end
 end
-require 'rails_helper'
 
 RSpec.describe "Api::V1::AttendanceEntries", type: :request do
   include Devise::Test::IntegrationHelpers

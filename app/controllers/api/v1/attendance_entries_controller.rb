@@ -4,11 +4,14 @@ module Api
       before_action :authenticate_user!
       before_action :underscore_params!
 
-      def index
+      def index # rubocop:todo Metrics/MethodLength
         entries = current_user.attendance_entries.order(recorded_at: :desc)
         paginated = entries.page(params[:page]).per(params[:per_page] || 20)
 
-        serialized = ActiveModelSerializers::SerializableResource.new(paginated, each_serializer: AttendanceEntrySerializer).as_json
+        serialized = ActiveModelSerializers::SerializableResource.new(
+          paginated,
+          each_serializer: AttendanceEntrySerializer
+        ).as_json
 
         render json: {
           entries: serialized,
