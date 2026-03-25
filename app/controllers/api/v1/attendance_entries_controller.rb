@@ -1,19 +1,19 @@
 module Api
   module V1
     class AttendanceEntriesController < BaseController
-     before_action :authenticate_user!
-     before_action :underscore_params!
-     
+      before_action :authenticate_user!
+      before_action :underscore_params!
+
       def index
         entries = current_user.attendance_entries.order(recorded_at: :desc)
         paginated = entries.page(params[:page]).per(params[:per_page] || 20)
         render json: paginated, meta: {
-            pagination: {
-              current_page: paginated.current_page,
-              total_pages: paginated.total_pages,
-              total_count: paginated.total_count
-            }
-          }, status: :ok
+          pagination: {
+            current_page: paginated.current_page,
+            total_pages: paginated.total_pages,
+            total_count: paginated.total_count
+          }
+        }, status: :ok
       end
 
       def create
@@ -22,7 +22,7 @@ module Api
         if entry.save
           render json: entry, status: :created
         else
-          render json: { errors: formatted_errors(entry) }, status: :unprocessable_entity
+          render json: { errors: formatted_errors(entry) }, status: :unprocessable_content
         end
       end
 
@@ -31,7 +31,7 @@ module Api
         if entry.update(attendance_entry_params)
           render json: entry, status: :ok
         else
-          render json: { errors: formatted_errors(entry) }, status: :unprocessable_entity
+          render json: { errors: formatted_errors(entry) }, status: :unprocessable_content
         end
       end
 
@@ -48,7 +48,7 @@ module Api
       end
 
       def attendance_entry_params
-        params.require(:attendance_entry).permit(:student_name, :status)
+        params.expect(attendance_entry: [:student_name, :status])
       end
 
       def formatted_errors(record)
@@ -56,7 +56,6 @@ module Api
           { field: field.to_s.camelize(:lower), messages: msgs }
         end
       end
-
     end
   end
 end
