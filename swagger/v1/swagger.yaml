@@ -1,12 +1,87 @@
+---
 openapi: 3.0.1
 info:
-  title: Attendance API
+  title: API V1
   version: v1
 paths:
-  /up:
+  "/api/v1/attendance_entries":
     get:
-      summary: Health check
+      summary: List attendance entries
+      tags:
+      - AttendanceEntries
+      parameters:
+      - name: Authorization
+        in: header
+        required: true
+        description: Bearer token
+        schema:
+          type: string
       responses:
         '200':
-          description: OK
-components: {}
+          description: attendance entries
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  entries:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        studentName:
+                          type: string
+                        status:
+                          type: string
+                        recordedAt:
+                          type: string
+                          format: date-time
+                  pagination:
+                    type: object
+                required:
+                - entries
+        '401':
+          description: unauthorized
+    post:
+      summary: Create an attendance entry
+      tags:
+      - AttendanceEntries
+      parameters:
+      - name: Authorization
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '201':
+          description: created
+        '401':
+          description: unauthorized
+        '422':
+          description: invalid request
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                attendance_entry:
+                  type: object
+                  properties:
+                    student_name:
+                      type: string
+                    status:
+                      type: string
+                    recorded_at:
+                      type: string
+                      format: date-time
+                  required:
+                  - student_name
+                  - status
+servers:
+- url: https://{defaultHost}
+  variables:
+    defaultHost:
+      default: www.example.com

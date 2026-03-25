@@ -7,7 +7,11 @@ module Api
       def index
         entries = current_user.attendance_entries.order(recorded_at: :desc)
         paginated = entries.page(params[:page]).per(params[:per_page] || 20)
-        render json: paginated, meta: {
+
+        serialized = ActiveModelSerializers::SerializableResource.new(paginated, each_serializer: AttendanceEntrySerializer).as_json
+
+        render json: {
+          entries: serialized,
           pagination: {
             current_page: paginated.current_page,
             total_pages: paginated.total_pages,

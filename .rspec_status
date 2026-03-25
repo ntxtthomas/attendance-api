@@ -1,13 +1,19 @@
-example_id                                             | status  | run_time        |
------------------------------------------------------- | ------- | --------------- |
-./spec/models/attendance_entry_spec.rb[1:1:1]          | passed  | 0.00255 seconds |
-./spec/models/attendance_entry_spec.rb[1:1:2]          | passed  | 0.00341 seconds |
-./spec/models/attendance_entry_spec.rb[1:1:3:1]        | passed  | 0.0095 seconds  |
-./spec/models/attendance_entry_spec.rb[1:1:4]          | passed  | 0.01039 seconds |
-./spec/models/attendance_entry_spec.rb[1:1:5]          | passed  | 0.00882 seconds |
-./spec/models/attendance_entry_spec.rb[1:1:6]          | passed  | 0.00211 seconds |
-./spec/models/attendance_entry_spec.rb[1:1:7]          | passed  | 0.00206 seconds |
-./spec/models/jwt_denylist_spec.rb[1:1]                | pending | 0 seconds       |
-./spec/models/user_spec.rb[1:1]                        | pending | 0.00002 seconds |
-./spec/requests/api/v1/attendance_entries_spec.rb[1:1] | passed  | 0.04973 seconds |
-./spec/requests/api/v1/attendance_entries_spec.rb[1:2] | passed  | 0.50209 seconds |
+example_id                                               | status  | run_time        |
+-------------------------------------------------------- | ------- | --------------- |
+./spec/integration/attendance_entries_spec.rb[1:1:1:1:1] | passed  | 0.03272 seconds |
+./spec/integration/attendance_entries_spec.rb[1:1:1:2:1] | passed  | 0.00352 seconds |
+./spec/integration/attendance_entries_spec.rb[1:1:2:1:1] | passed  | 0.14035 seconds |
+./spec/integration/attendance_entries_spec.rb[1:1:2:2:1] | passed  | 0.00541 seconds |
+./spec/integration/attendance_entries_spec.rb[1:1:2:3:1] | passed  | 0.26613 seconds |
+./spec/models/attendance_entry_spec.rb[1:1:1]            | passed  | 0.00255 seconds |
+./spec/models/attendance_entry_spec.rb[1:1:2]            | passed  | 0.00341 seconds |
+./spec/models/attendance_entry_spec.rb[1:1:3:1]          | passed  | 0.0095 seconds  |
+./spec/models/attendance_entry_spec.rb[1:1:4]            | passed  | 0.01039 seconds |
+./spec/models/attendance_entry_spec.rb[1:1:5]            | passed  | 0.00882 seconds |
+./spec/models/attendance_entry_spec.rb[1:1:6]            | passed  | 0.00211 seconds |
+./spec/models/attendance_entry_spec.rb[1:1:7]            | passed  | 0.00206 seconds |
+./spec/models/jwt_denylist_spec.rb[1:1]                  | pending | 0 seconds       |
+./spec/models/user_spec.rb[1:1]                          | pending | 0.00002 seconds |
+./spec/requests/api/v1/attendance_entries_spec.rb[1:1]   | passed  | 0.04973 seconds |
+./spec/requests/api/v1/attendance_entries_spec.rb[1:2]   | passed  | 0.50209 seconds |
+./spec/requests/api/v1/sessions_spec.rb[1:1]             | passed  | 0.18304 seconds |
