@@ -6,6 +6,4 @@ class User < ApplicationRecord
 
   devise :jwt_authenticatable, jwt_revocation_strategy: JwtDenylist if defined?(JwtDenylist)
   has_many :attendance_entries, dependent: :nullify
-
-  
 end
