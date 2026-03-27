@@ -33,6 +33,8 @@ module AttendanceApi
     config.middleware.use ActionDispatch::Session::CookieStore,
       key: "_attendance_api_session",
       same_site: :lax
+    # enable flash messages required by Devise controllers
+    config.middleware.use ActionDispatch::Flash
     # Register Rack::Attack centrally to avoid duplicate insertions from initializers
     config.middleware.use Rack::Attack
   end
