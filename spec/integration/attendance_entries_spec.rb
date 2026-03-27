@@ -133,4 +133,36 @@ RSpec.describe 'AttendanceEntries API', type: :request do
       end
     end
   end
+
+  path '/api/v1/attendance_entries/{id}' do
+    delete 'Delete an attendance entry' do
+      tags 'AttendanceEntries'
+      parameter name: :Authorization, in: :header, type: :string, required: true
+      parameter name: :id, in: :path, type: :integer, required: true
+
+      response '204', 'no content' do
+        let(:user) { create(:user) }
+        let(:entry) { create(:attendance_entry, user: user) }
+        let(:id) { entry.id }
+        let(:Authorization) { "Bearer #{Warden::JWTAuth::UserEncoder.new.call(user, :user, nil).first}" }
+
+        run_test!
+      end
+
+      response '401', 'unauthorized' do
+        let(:id) { 1 }
+        let(:Authorization) { nil }
+
+        run_test!
+      end
+
+      response '404', 'not found' do
+        let(:user) { create(:user) }
+        let(:id) { 9999 }
+        let(:Authorization) { "Bearer #{Warden::JWTAuth::UserEncoder.new.call(user, :user, nil).first}" }
+
+        run_test!
+      end
+    end
+  end
 end

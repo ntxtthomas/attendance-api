@@ -80,6 +80,67 @@ paths:
                   required:
                   - student_name
                   - status
+  "/api/v1/attendance_entries/{id}":
+    patch:
+      summary: Update an attendance entry
+      tags:
+      - AttendanceEntries
+      parameters:
+      - name: Authorization
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: updated
+        '401':
+          description: unauthorized
+        '404':
+          description: not found
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                attendance_entry:
+                  type: object
+                  properties:
+                    student_name:
+                      type: string
+                    status:
+                      type: string
+                    recorded_at:
+                      type: string
+                      format: date-time
+    delete:
+      summary: Delete an attendance entry
+      tags:
+      - AttendanceEntries
+      parameters:
+      - name: Authorization
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '204':
+          description: no content
+        '401':
+          description: unauthorized
+        '404':
+          description: not found
 servers:
 - url: https://{defaultHost}
   variables:
