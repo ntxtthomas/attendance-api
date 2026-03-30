@@ -4,6 +4,115 @@ info:
   title: API V1
   version: v1
 paths:
+  "/users/sign_in":
+    post:
+      summary: Sign in and receive JWT
+      tags:
+      - Auth
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user:
+                  type: object
+                  properties:
+                    email:
+                      type: string
+                      format: email
+                    password:
+                      type: string
+                  required:
+                  - email
+                  - password
+              required:
+              - user
+      responses:
+        '200':
+          description: signed in
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+                  user:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      email:
+                        type: string
+                        format: email
+                required:
+                - token
+                - user
+        '401':
+          description: unauthorized
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/UnauthorizedError"
+  "/users/sign_out":
+    delete:
+      summary: Revoke current JWT
+      tags:
+      - Auth
+      parameters:
+      - name: Authorization
+        in: header
+        required: true
+        description: Bearer token
+        schema:
+          type: string
+      responses:
+        '204':
+          description: signed out
+        '401':
+          description: unauthorized
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/UnauthorizedError"
+  "/api/v1/me":
+    get:
+      summary: Get current authenticated user
+      tags:
+      - Auth
+      parameters:
+      - name: Authorization
+        in: header
+        required: true
+        description: Bearer token
+        schema:
+          type: string
+      responses:
+        '200':
+          description: current user
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  user:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      email:
+                        type: string
+                        format: email
+                required:
+                - user
+        '401':
+          description: unauthorized
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/UnauthorizedError"
   "/api/v1/attendance_entries":
     get:
       summary: List attendance entries
@@ -146,3 +255,17 @@ servers:
   variables:
     defaultHost:
       default: www.example.com
+components:
+  schemas:
+    UnauthorizedError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: Invalid Email or password.
+        code:
+          type: string
+          example: unauthorized
+      required:
+      - error
+      - code
