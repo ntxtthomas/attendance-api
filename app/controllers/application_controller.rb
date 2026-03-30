@@ -17,7 +17,7 @@ class ApplicationController < ActionController::API
     errors = record.errors.map do |attr, msg|
       { field: attr.to_s.camelize(:lower), messages: [msg] }
     end
-    render json: { errors: errors }, status: :unprocessable_entity
+    render json: { errors: errors }, status: :unprocessable_content
   end
 
   def render_bad_request(exception)
