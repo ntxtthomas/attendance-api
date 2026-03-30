@@ -44,3 +44,4 @@ node_modules/
 /storage/*
 !/storage/.keep
 /public/uploads
+.rspec_status
