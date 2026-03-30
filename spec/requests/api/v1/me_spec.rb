@@ -20,6 +20,10 @@ RSpec.describe "Api::V1::Me", type: :request do
       get "/api/v1/me", as: :json
 
       expect(response).to have_http_status(:unauthorized)
+      expect(response.parsed_body).to include(
+        "error" => a_kind_of(String),
+        "code" => "unauthorized"
+      )
     end
   end
 end
