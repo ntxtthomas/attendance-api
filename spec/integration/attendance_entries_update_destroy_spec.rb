@@ -2,7 +2,7 @@ require 'swagger_helper'
 
 RSpec.describe 'AttendanceEntries API', type: :request do
   path '/api/v1/attendance_entries/{id}' do
-    patch 'Update an attendance entry' do
+    put 'Update an attendance entry' do
       tags 'AttendanceEntries'
       consumes 'application/json'
       produces 'application/json'

@@ -31,25 +31,25 @@ RSpec.describe Api::V1::AttendanceEntriesController, type: :request do
     end
   end
 
-  describe "PATCH /api/v1/attendance_entries/:id" do
+  describe "PUT /api/v1/attendance_entries/:id" do
     let!(:entry) { create(:attendance_entry, user: user, student_name: "Old") }
     let!(:other_entry) { create(:attendance_entry, user: other_user) }
 
     it "updates an entry owned by the user" do
-      patch "/api/v1/attendance_entries/#{entry.id}",
-            params: { attendance_entry: { student_name: "New" } },
-            headers: auth_headers(user),
-            as: :json
+      put "/api/v1/attendance_entries/#{entry.id}",
+          params: { attendance_entry: { student_name: "New" } },
+          headers: auth_headers(user),
+          as: :json
 
       expect(response).to have_http_status(:ok)
       expect(entry.reload.student_name).to eq("New")
     end
 
     it "returns 404 when trying to update someone else's entry" do
-      patch "/api/v1/attendance_entries/#{other_entry.id}",
-            params: { attendance_entry: { student_name: "Hax" } },
-            headers: auth_headers(user),
-            as: :json
+      put "/api/v1/attendance_entries/#{other_entry.id}",
+          params: { attendance_entry: { student_name: "Hax" } },
+          headers: auth_headers(user),
+          as: :json
 
       expect(response).to have_http_status(:not_found)
     end
