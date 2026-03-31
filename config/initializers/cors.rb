@@ -11,6 +11,18 @@ Rails.application.config.middleware.insert_before 0, Rack::Cors do
     origins = ENV["CORS_ALLOWED_ORIGINS"]&.split(",") || ["http://localhost:5174"]
     origins origins
 
+    resource "/users/sign_in",
+      headers: :any,
+      methods: %i[get post put patch delete options head],
+      credentials: false,
+      max_age: 600
+
+    resource "/users/sign_out",
+      headers: :any,
+      methods: %i[get post put patch delete options head],
+      credentials: false,
+      max_age: 600  
+
     resource "/api/*",
       headers: :any,
       methods: %i[get post put patch delete options head],

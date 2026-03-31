@@ -21,6 +21,18 @@ RSpec.describe "Sessions", type: :request do
       expect(token).to be_present
     end
 
+    it "accepts a flat payload from the frontend" do
+      post "/users/sign_in",
+           params: { email: user.email, password: user.password },
+           as: :json
+
+      expect(response).to have_http_status(:ok)
+      expect(response.parsed_body).to include(
+        "token" => a_kind_of(String),
+        "user" => include("email" => user.email)
+      )
+    end
+
     it "returns unauthorized on bad credentials" do
       post "/users/sign_in",
            params: { user: { email: user.email, password: "wrong" } },
