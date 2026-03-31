@@ -81,7 +81,7 @@ group :development, :test do
   gem "rubocop-rails", "~> 2.34"
   
   # Use RSpec for testing [https://rspec.info/]
-  gem "rspec-rails", "~> 6.0"
+  gem "rspec-rails", "~> 8.0"
 
   # Use FactoryBot for fixtures replacement [https://github.com/thoughtbot/factory_bot]
   gem "factory_bot_rails"
