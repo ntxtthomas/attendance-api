@@ -1,7 +1,6 @@
 *.rbc
 capybara-*.html
 .rspec
-.rspec_status
 /db/*.sqlite3
 /db/*.sqlite3-journal
 /db/*.sqlite3-[0-9]*
@@ -45,4 +44,3 @@ node_modules/
 /storage/*
 !/storage/.keep
 /public/uploads
-.rspec_status
