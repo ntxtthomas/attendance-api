@@ -2,7 +2,9 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       resource :me, only: :show, controller: :me
-      resources :attendance_entries, only: %i[index create update destroy]
+      resources :attendance_entries, only: %i[index create destroy] do
+        member { put :update, action: :update }
+      end
     end
   end
   devise_for :users, controllers: { sessions: 'users/sessions' }
