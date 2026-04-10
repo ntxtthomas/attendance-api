@@ -75,7 +75,7 @@ group :development, :test do
   gem "brakeman", require: false
 
   # Use RuboCop for Ruby linting and style checking [https://github.com/rubocop/rubocop]
-  gem "rubocop", "~> 1.85"
+  gem "rubocop", "~> 1.86"
   
   # Ruby styling for Rails [https://github.com/rubocop/rubocop-rails]
   gem "rubocop-rails", "~> 2.34"
