@@ -78,7 +78,7 @@ group :development, :test do
   gem "rubocop", "~> 1.85"
   
   # Ruby styling for Rails [https://github.com/rubocop/rubocop-rails]
-  gem "rubocop-rails", "~> 2.34"
+  gem "rubocop-rails", "~> 2.35"
   
   # Use RSpec for testing [https://rspec.info/]
   gem "rspec-rails", "~> 6.0"
